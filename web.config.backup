@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+  IMPORTANT: This web.config requires URL Rewrite Module to be installed on IIS.
+  If you get error 500.19, either:
+  1. Install URL Rewrite Module: https://www.iis.net/downloads/microsoft/url-rewrite
+  2. OR use web.config.minimal instead (rename it to web.config)
+-->
+<configuration>
+  <system.webServer>
+    <!-- URL Rewrite for React Router (requires URL Rewrite Module) -->
+    <rewrite>
+      <rules>
+        <!-- Handle React Router - redirect all requests to index.html -->
+        <rule name="React Routes" stopProcessing="true">
+          <match url=".*" />
+          <conditions logicalGrouping="MatchAll">
+            <add input="{REQUEST_FILENAME}" matchType="IsFile" negate="true" />
+            <add input="{REQUEST_FILENAME}" matchType="IsDirectory" negate="true" />
+            <add input="{REQUEST_URI}" pattern="^/(api)" negate="true" />
+          </conditions>
+          <action type="Rewrite" url="/" />
+        </rule>
+      </rules>
+    </rewrite>
+    
+    <!-- Enable compression for better performance -->
+    <httpCompression>
+      <dynamicTypes>
+        <add mimeType="application/javascript" enabled="true" />
+        <add mimeType="application/json" enabled="true" />
+        <add mimeType="text/css" enabled="true" />
+        <add mimeType="text/html" enabled="true" />
+      </dynamicTypes>
+      <staticTypes>
+        <add mimeType="application/javascript" enabled="true" />
+        <add mimeType="application/json" enabled="true" />
+        <add mimeType="text/css" enabled="true" />
+        <add mimeType="text/html" enabled="true" />
+      </staticTypes>
+    </httpCompression>
+    
+    <!-- Set proper MIME types -->
+    <staticContent>
+      <mimeMap fileExtension=".json" mimeType="application/json" />
+      <mimeMap fileExtension=".woff" mimeType="application/font-woff" />
+      <mimeMap fileExtension=".woff2" mimeType="application/font-woff2" />
+    </staticContent>
+    
+    <!-- Security headers -->
+    <httpProtocol>
+      <customHeaders>
+        <add name="X-Content-Type-Options" value="nosniff" />
+        <add name="X-Frame-Options" value="SAMEORIGIN" />
+        <add name="X-XSS-Protection" value="1; mode=block" />
+      </customHeaders>
+    </httpProtocol>
+    
+    <!-- Default document -->
+    <defaultDocument>
+      <files>
+        <clear />
+        <add value="index.html" />
+      </files>
+    </defaultDocument>
+    
+    <!-- Error pages -->
+    <httpErrors errorMode="Custom" existingResponse="Replace">
+      <remove statusCode="404" />
+      <error statusCode="404" path="/" responseMode="ExecuteURL" />
+    </httpErrors>
+  </system.webServer>
+</configuration>

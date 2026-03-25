@@ -1,0 +1,269 @@
+/* ================================================================
+   Shared Form Component Styles
+   Used by: Button, TextInput, SearchInput, Dropdown
+   ================================================================ */
+
+/* ── Button ─────────────────────────────────────────────────── */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    border: none;
+    border-radius: 6px;
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    outline: none;
+    position: relative;
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+/* Sizes */
+.btnSm {
+    padding: 0.3rem 0.75rem;
+    font-size: 0.8rem;
+}
+
+.btnMd {
+    padding: 0.35rem 1rem;
+    font-size: 0.9rem;
+}
+
+.btnLg {
+    padding: 0.55rem 1.4rem;
+    font-size: 1rem;
+}
+
+/* Variant: primary (maroon — matches existing design) */
+.btnPrimary {
+    background-color: #381230;
+    color: white;
+    margin-bottom: 0.5rem;
+}
+
+.btnPrimary:hover:not(:disabled) {
+    background-color: #7C4168;
+    transform: translateY(-1px);
+}
+
+.btnPrimary:active:not(:disabled) {
+    background-color: #2a0d24;
+    transform: translateY(0);
+}
+
+/* Variant: danger */
+.btnDanger {
+    background-color: #ef4444;
+    color: white;
+}
+
+.btnDanger:hover:not(:disabled) {
+    background-color: #dc2626;
+}
+
+/* Variant: ghost (outlined) */
+.btnGhost {
+    background-color: white;
+    color: #374151;
+    border: 1px solid #d1d5db;
+}
+
+.btnGhost:hover:not(:disabled) {
+    background-color: #f3f4f6;
+    border-color: #9ca3af;
+}
+
+/* Variant: icon (transparent — for edit/delete/toggle in table rows) */
+.btnIcon {
+    background: none;
+    padding: 0.25rem;
+    border-radius: 6px;
+    color: inherit;
+    margin-bottom: 0;
+}
+
+.btnIcon:hover:not(:disabled) {
+    background: rgba(0, 0, 0, 0.06);
+}
+
+.btnIcon:active:not(:disabled) {
+    transform: translateY(1px);
+}
+
+/* Spinner inside button */
+.spinner {
+    width: 14px;
+    height: 14px;
+    border: 2px solid currentColor;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: btnSpin 0.7s linear infinite;
+    flex-shrink: 0;
+}
+
+@keyframes btnSpin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* ── TextInput ──────────────────────────────────────────────── */
+.inputWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.inputLabel {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+}
+
+.inputField {
+    width: 100%;
+    padding: 0.65rem 0.85rem;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-family: inherit;
+    color: #1f2937;
+    background: white;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.inputField:focus {
+    outline: none;
+    border-color: #381230;
+    box-shadow: 0 0 0 3px rgba(56, 18, 48, 0.1);
+}
+
+.inputField:disabled {
+    background: #f9fafb;
+    cursor: not-allowed;
+    color: #9ca3af;
+}
+
+.inputFieldError {
+    border-color: #ef4444;
+}
+
+.inputFieldError:focus {
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12);
+}
+
+.inputError {
+    font-size: 0.78rem;
+    color: #ef4444;
+}
+
+
+/* ── SearchInput ────────────────────────────────────────────── */
+.searchWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.searchIcon {
+    position: absolute;
+    left: 0.75rem;
+    width: 16px;
+    height: 16px;
+    color: #9ca3af;
+    pointer-events: none;
+    flex-shrink: 0;
+}
+
+.searchField {
+    width: 100%;
+    padding: 0.6rem 0.85rem 0.6rem 2.25rem;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-family: inherit;
+    color: #1f2937;
+    background: white;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.searchField::placeholder {
+    color: #9ca3af;
+}
+
+.searchField:focus {
+    outline: none;
+    border-color: #381230;
+    box-shadow: 0 0 0 3px rgba(56, 18, 48, 0.1);
+}
+
+.clearBtn {
+    position: absolute;
+    right: 0.6rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.15rem;
+    color: #9ca3af;
+    display: flex;
+    align-items: center;
+    border-radius: 50%;
+    transition: color 0.15s;
+    font-size: 0.9rem;
+    line-height: 1;
+}
+
+.clearBtn:hover {
+    color: #374151;
+}
+
+
+/* ── Dropdown ───────────────────────────────────────────────── */
+.selectWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.selectField {
+    width: 100%;
+    padding: 0.6rem 2rem 0.6rem 0.85rem;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-family: inherit;
+    color: #1f2937;
+    background: white;
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.selectField:focus {
+    outline: none;
+    border-color: #381230;
+    box-shadow: 0 0 0 3px rgba(56, 18, 48, 0.1);
+}
+
+.selectField:disabled {
+    background: #f9fafb;
+    cursor: not-allowed;
+}
+
+.selectArrow {
+    position: absolute;
+    right: 0.7rem;
+    pointer-events: none;
+    color: #6b7280;
+    font-size: 0.75rem;
+}
