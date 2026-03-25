@@ -1,23 +1,24 @@
 import React from 'react';
-import Lottie from 'lottie-react';
 import styles from './LoadingOverlay.module.css';
-import loadingAnimation from '../../assets/loading_gray.json';
 
+/**
+ * LoadingOverlay — used only on Edit/form pages for save/upload actions.
+ * Shows a slim animated bar at the top + a small floating status pill.
+ * No more full-screen blocking overlay.
+ */
 const LoadingOverlay = ({ message = 'Loading...', show = false }) => {
   if (!show) return null;
 
   return (
-    <div className={styles.loadingOverlay}>
-      <div className={styles.loadingSpinner}>
-        <Lottie
-          animationData={loadingAnimation}
-          loop
-          autoplay
-          style={{ width: 50, height: 50 }}
-        />
-        <p className={styles.loadingText}>{message}</p>
+    <>
+      {/* Slim animated top bar */}
+      <div className={styles.progressBar} />
+      {/* Floating status pill */}
+      <div className={styles.statusPill}>
+        <span className={styles.dot} />
+        {message}
       </div>
-    </div>
+    </>
   );
 };
 

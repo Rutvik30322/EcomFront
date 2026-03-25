@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { orderService } from '../../services/api';
 import { useSocket } from '../../contexts/SocketContext';
@@ -7,7 +7,6 @@ import Header from '../../components/layout/Header';
 import NotificationToast from '../../components/ui/NotificationToast';
 import { useTranslation } from 'react-i18next';
 import styles from './Dashboard.module.css';
-import LoadingOverlay from '../../components/ui/LoadingOverlay';
 import {
   AreaChart,
   Area,
@@ -262,20 +261,60 @@ const Dashboard = () => {
   const paymentMethodData = preparePaymentMethodData();
   const revenueByPaymentMethodData = prepareRevenueByPaymentMethodData();
 
-  if (loading) {
+  // ── Skeleton stat card ──────────────────────────────────────
+  const SkeletonCard = () => (
+    <div style={{
+      background: 'white',
+      borderRadius: '14px',
+      padding: '1.5rem',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '1rem',
+      boxShadow: '0 1px 6px rgba(15,27,53,0.06)',
+      border: '1px solid #E2E8F0',
+      overflow: 'hidden',
+    }}>
+      <div style={{
+        width: 50, height: 50, borderRadius: '50%',
+        background: 'linear-gradient(90deg,#f0f4ff 25%,#e2e8f0 50%,#f0f4ff 75%)',
+        backgroundSize: '400px 100%',
+        animation: 'shimmer 1.4s ease-in-out infinite',
+        flexShrink: 0,
+      }} />
+      <div style={{ flex: 1 }}>
+        <div style={{
+          height: 20, width: '55%', borderRadius: 6, marginBottom: 8,
+          background: 'linear-gradient(90deg,#f0f4ff 25%,#e2e8f0 50%,#f0f4ff 75%)',
+          backgroundSize: '400px 100%',
+          animation: 'shimmer 1.4s ease-in-out infinite',
+        }} />
+        <div style={{
+          height: 13, width: '35%', borderRadius: 4,
+          background: 'linear-gradient(90deg,#f0f4ff 25%,#e2e8f0 50%,#f0f4ff 75%)',
+          backgroundSize: '400px 100%',
+          animation: 'shimmer 1.4s ease-in-out infinite',
+        }} />
+      </div>
+    </div>
+  );
+
+  if (loading && !stats) {
     return (
       <div className={styles.dashboardContainer}>
-        <LoadingOverlay
-          show={loading || actionLoading.delete || actionLoading.import || actionLoading.createProducts || parsingPdf}
-          message={
-            t('Loading dashboard...')
-          }
-        />
+        <style>{`@keyframes shimmer{0%{background-position:-400px 0}100%{background-position:400px 0}}`}</style>
         <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-        <main className={styles.mainContent}>
-          { }
-          <div className={styles.dashboardContainer}>
-            { }
+        <main className={`${styles.mainContent} ${!sidebarOpen ? styles.mainContentExpanded : ''}`}>
+          <Header
+            title={t('Admin Dashboard')}
+            onMenuToggle={() => setSidebarOpen(!sidebarOpen)}
+          />
+          <div className={styles.dashboardContent}>
+            <div className={styles.statsGrid} style={{ marginBottom: '2rem' }}>
+              {[...Array(4)].map((_,i) => <SkeletonCard key={i} />)}
+            </div>
+            <div className={styles.statsGrid}>
+              {[...Array(6)].map((_,i) => <SkeletonCard key={i} />)}
+            </div>
           </div>
         </main>
       </div>

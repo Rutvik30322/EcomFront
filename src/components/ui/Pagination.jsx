@@ -56,7 +56,7 @@ const Pagination = ({
                     className={btnClassName}
                     onClick={() => onPageChange(p)}
                     disabled={loading}
-                    style={p === page ? { background: '#381230', color: 'white', borderColor: '#381230', fontWeight: 700 } : {}}
+                    style={p === page ? { background: '#0EA5E9', color: 'white', borderColor: '#0EA5E9', fontWeight: 700 } : {}}
                 >
                     {p}
                 </button>

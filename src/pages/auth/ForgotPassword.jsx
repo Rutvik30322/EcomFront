@@ -1,8 +1,7 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { sendAdminOtp, verifyAdminOtp, resetAdminPassword } from '../../services/authService';
 import styles from './Login.module.css';
-import logoImage from '../../assets/Dabbo-Logo-icon-white.png';
 
 const ForgotPassword = () => {
   const [step, setStep] = useState('mobile'); // 'mobile', 'otp', 'reset'
@@ -116,8 +115,8 @@ const ForgotPassword = () => {
           required
         />
       </div>
-      <button type="submit" disabled={loading}>
-        {loading ? 'Sending OTP...' : 'Send OTP'}
+      <button type="submit" className={styles.submitBtn} disabled={loading}>
+        {loading ? 'Sending OTP...' : 'Send OTP →'}
       </button>
     </form>
   );
@@ -140,26 +139,19 @@ const ForgotPassword = () => {
           OTP sent to {mobile.substring(0, 3)}***{mobile.substring(6)}
         </p>
       </div>
-      <button type="submit" disabled={loading}>
-        {loading ? 'Verifying...' : 'Verify OTP'}
+      <button type="submit" className={styles.submitBtn} disabled={loading}>
+        {loading ? 'Verifying...' : 'Verify OTP →'}
       </button>
       <div style={{ marginTop: '1rem', textAlign: 'center' }}>
         {resendTimer > 0 ? (
-          <span style={{ fontSize: '14px', color: '#666' }}>
+          <span style={{ fontSize: '0.85rem', color: '#64748B' }}>
             Resend OTP in {resendTimer}s
           </span>
         ) : (
           <button
             type="button"
             onClick={handleResendOtp}
-            style={{
-              background: 'none',
-              border: 'none',
-              color: '#6b46c1',
-              cursor: 'pointer',
-              textDecoration: 'underline',
-              fontSize: '14px',
-            }}
+            className={styles.forgotPasswordButton}
           >
             Resend OTP
           </button>
@@ -232,29 +224,45 @@ const ForgotPassword = () => {
           </button>
         </div>
       </div>
-      <button type="submit" disabled={loading}>
-        {loading ? 'Resetting...' : 'Reset Password'}
+      <button type="submit" className={styles.submitBtn} disabled={loading}>
+        {loading ? 'Resetting...' : 'Reset Password →'}
       </button>
     </form>
   );
 
   return (
     <div className={styles.loginContainer}>
-      <div className={styles.backgroundImage}></div>
+      <div className={styles.bgLayer} />
+      <div className={styles.bgOrb1} />
+      <div className={styles.bgOrb2} />
+      <div className={styles.bgGrid} />
       <div className={styles.loginCard}>
-        <div className={styles.loginLogo}>
-          <img src={logoImage} alt="Logo" className={styles.logoImage} />
-          <h2 className={styles.loginTitle}>
-            {step === 'mobile' && 'Forgot Password'}
-            {step === 'otp' && 'Enter OTP'}
-            {step === 'reset' && 'Reset Password'}
-          </h2>
-          <p className={styles.loginSubtitle}>
-            {step === 'mobile' && 'Enter your mobile number to receive OTP'}
-            {step === 'otp' && 'Enter the OTP sent to your mobile'}
-            {step === 'reset' && 'Enter your new password'}
-          </p>
+        {/* Brand */}
+        <div className={styles.brandSection}>
+          <div className={styles.logoMark}>
+            <img
+              src="https://img.icons8.com/fluency/64/shopping-cart.png"
+              alt="ShopNova Logo"
+              style={{ width: 44, height: 44, borderRadius: 10 }}
+              onError={e => { e.target.style.display='none'; }}
+            />
+          </div>
+          <div className={styles.brandText}>
+            <h1 className={styles.brandName}>Shop<span>Nova</span></h1>
+            <p className={styles.brandTagline}>Admin Panel</p>
+          </div>
         </div>
+        <div className={styles.divider} />
+        <h2 className={styles.loginTitle}>
+          {step === 'mobile' && '🔐 Forgot Password'}
+          {step === 'otp' && '📲 Enter OTP'}
+          {step === 'reset' && '🔑 Reset Password'}
+        </h2>
+        <p className={styles.loginSubtitle}>
+          {step === 'mobile' && 'Enter your mobile number to receive OTP'}
+          {step === 'otp' && 'Enter the OTP sent to your mobile'}
+          {step === 'reset' && 'Create a strong new password'}
+        </p>
         {error && <div className={styles.errorMessage}>{error}</div>}
         {success && <div className={styles.successMessage}>{success}</div>}
         

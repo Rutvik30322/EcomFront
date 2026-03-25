@@ -208,13 +208,13 @@ const Reviews = () => {
                 </thead>
                 <tbody>
                   {Array.isArray(reviews) && reviews.map((review, index) => {
-                    const productName = (review.product && typeof review.product === 'object')
+                    const productName = typeof review.product === 'object'
                       ? review.product.name
                       : t('N/A');
-                    const userName = (review.user && typeof review.user === 'object')
+                    const userName = typeof review.user === 'object'
                       ? review.user.name
                       : t('Anonymous');
-                    const userEmail = (review.user && typeof review.user === 'object' && review.user.email)
+                    const userEmail = typeof review.user === 'object' && review.user.email
                       ? review.user.email
                       : null;
 
@@ -304,9 +304,9 @@ const Reviews = () => {
         show={showDeleteModal}
         title={t("Delete Review")}
         message={t("Are you sure you want to delete this review?")}
-        itemName={reviewToDelete ? (reviewToDelete.product && typeof reviewToDelete.product === 'object' ? reviewToDelete.product.name : t('N/A')) : ''}
+        itemName={reviewToDelete ? (typeof reviewToDelete.product === 'object' ? reviewToDelete.product.name : t('N/A')) : ''}
         itemDetails={reviewToDelete ? [
-          { label: t('User'), value: (reviewToDelete.user && typeof reviewToDelete.user === 'object' ? reviewToDelete.user.name : t('Anonymous')) },
+          { label: t('User'), value: typeof reviewToDelete.user === 'object' ? reviewToDelete.user.name : t('Anonymous') },
           { label: t('Rating'), value: `${reviewToDelete.rating}/5` },
           { label: t('Status'), value: reviewToDelete.isApproved ? t('Approved') : t('Pending') },
         ] : []}

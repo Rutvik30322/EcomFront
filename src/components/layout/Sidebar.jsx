@@ -4,9 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getMe } from '../../services/authService';
 import { setUser } from '../../store/slices/authSlice';
 import { useTranslation } from 'react-i18next';
-import LanguageSwitcher from './LanguageSwitcher';
 import styles from './Sidebar.module.css';
-import dabboLogo from '../../assets/Dabbo-Logo-icon-white.png';
 import dashboardIcon from '../../assets/svg/dashboard.svg';
 import productIcon from '../../assets/svg/product.svg';
 import bannerIcon from '../../assets/svg/banner.svg';
@@ -108,11 +106,16 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
 
   return (
     <>
-      <aside className={`${styles.sidebar} ${sidebarOpen ? styles.sidebarOpen : ''}`} style={{ left: sidebarOpen ? '0' : '-250px' }}>
+      <aside className={`${styles.sidebar} ${sidebarOpen ? styles.sidebarOpen : ''}`} style={{ left: sidebarOpen ? '0' : '-260px' }}>
         <div className={styles.sidebarHeader}>
           <div className={styles.logoContainer}>
-            <img src={dabboLogo} alt="Dabbo Logo" className={styles.logo} />
-            <h2 className={styles.sidebarTitle}>Admin Panel</h2>
+            <img
+              src="https://img.icons8.com/fluency/48/shopping-cart.png"
+              alt="ShopNova"
+              className={styles.logo}
+              onError={e => { e.target.style.display='none'; }}
+            />
+            <h2 className={styles.sidebarTitle}>Shop<span>Nova</span></h2>
           </div>
           <button
             className={styles.closeSidebarBtn}
@@ -144,7 +147,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
             <span className={styles.closeIcon}>✕</span>
           </button>
         </div>
-        <LanguageSwitcher />
+        {/* Language switcher has been moved to the Header */}
         <nav className={styles.navMenu}>
           <ul className={styles.navList}>
             {navItems.map((item) => {

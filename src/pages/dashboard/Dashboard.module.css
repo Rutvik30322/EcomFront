@@ -1,5 +1,5 @@
 .dashboardHeader {
-  background-color: #381230;
+  background-color: #0EA5E9;
   padding: 1rem 2rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -28,7 +28,7 @@
 }
 
 .refreshBtn {
-  background-color: #3b82f6;
+  background-color: #0EA5E9;
   color: white;
   border: none;
   padding: 0.5rem 1rem;
@@ -42,7 +42,7 @@
 }
 
 .refreshBtn:hover:not(:disabled) {
-  background-color: #2563eb;
+  background-color: #0EA5E9;
 }
 
 .refreshBtn:disabled {
@@ -196,7 +196,7 @@
 }
 
 .navLink.active {
-  background-color: #3b82f6;
+  background-color: #0EA5E9;
   color: white;
 }
 
@@ -223,10 +223,11 @@
   display: flex;
   flex-wrap: wrap;
   margin-bottom: 1.5rem;
-  padding: 1.25rem;
-  background-color: #f8f9fa;
-  border-radius: 8px;
-  border: 1px solid #e5e7eb;
+  padding: 1.25rem 1.5rem;
+  background-color: white;
+  border-radius: 12px;
+  border: 1px solid #f1f5f9;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
   align-items: center;
   gap: 1rem;
 }
@@ -523,7 +524,7 @@
 .statusCount {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #3b82f6;
+  color: #0EA5E9;
 }
 
 .recentOrdersTable {

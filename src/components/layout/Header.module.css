@@ -1,15 +1,48 @@
+/* ============================================================
+   BazarX — Header Component Styles
+   ============================================================ */
+
 .dashboardHeader {
-  background-color: #381230;
-  padding: 1rem 2rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #0F1B35 0%, #1A2D52 100%);
+  padding: 0 2rem;
+  height: 64px;
+  box-shadow: 0 2px 12px rgba(15, 27, 53, 0.35);
   display: flex;
   justify-content: space-between;
   align-items: center;
   position: sticky;
   top: 0;
   z-index: 100;
+  border-bottom: 1px solid rgba(14, 165, 233, 0.2);
 }
 
+/* ── Brand Logo in Header ─────────────────────────────────── */
+.headerBrand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+}
+
+.headerBrandLogo {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  object-fit: contain;
+}
+
+.headerBrandName {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  letter-spacing: -0.3px;
+}
+
+.headerBrandName span {
+  color: #0EA5E9;
+}
+
+/* ── Left ─────────────────────────────────────────────────── */
 .headerLeft {
   display: flex;
   align-items: center;
@@ -20,85 +53,100 @@
 .headerRight {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.75rem;
 }
 
+/* ── Menu Toggle ──────────────────────────────────────────── */
 .menuToggleBtn {
-  background: none;
-  border: none;
-  font-size: 1.5rem;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  font-size: 1.25rem;
   cursor: pointer;
-  padding: 0.5rem;
-  display: flex; /* Always visible on all screens */
-  align-items: center;
-  justify-content: center;
-  border-radius: 4px;
-  transition: background-color 0.2s;
-  color: #ffffff;
-  min-width: 40px;
-  height: 40px;
-  z-index: 1001; /* Ensure it's above sidebar */
-  position: relative;
-}
-
-.menuToggleBtn:hover {
-  background-color: #7A4E73;
-}
-
-.dashboardTitle {
-  font-size: 1.5rem;
-  color: #ffffff;
-  margin: 0;
-  font-weight: 600;
-}
-
-.refreshBtn {
-  background-color: #3b82f6;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.3s;
+  padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 40px;
+  border-radius: 8px;
+  transition: background 0.2s, border-color 0.2s;
+  color: #ffffff;
+  width: 40px;
   height: 40px;
+  z-index: 1001;
+  position: relative;
+  flex-shrink: 0;
 }
 
-.refreshBtn:hover:not(:disabled) {
-  background-color: #2563eb;
+.menuToggleBtn:hover {
+  background: rgba(14, 165, 233, 0.15);
+  border-color: rgba(14, 165, 233, 0.4);
 }
 
-.refreshBtn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+/* ── Page Title ───────────────────────────────────────────── */
+.dashboardTitle {
+  font-size: 1.15rem;
+  color: #E2E8F0;
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: -0.2px;
 }
 
-/* Notification Styles */
+/* ── Language Switcher (placed in header) ────────────────── */
+.langSwitcher {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  padding: 0.3rem 0.5rem;
+}
+
+.langBtn {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.6);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.2rem 0.45rem;
+  border-radius: 5px;
+  transition: all 0.2s;
+  letter-spacing: 0.5px;
+}
+
+.langBtn.active {
+  background: #0EA5E9;
+  color: #0F1B35;
+}
+
+.langBtn:hover:not(.active) {
+  color: #ffffff;
+  background: rgba(255,255,255,0.1);
+}
+
+/* ── Notification ────────────────────────────────────────── */
 .notificationContainer {
   position: relative;
 }
 
 .notificationBtn {
-  background: none;
-  border: none;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
   cursor: pointer;
-  padding: 0.5rem;
+  padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  border-radius: 50%;
-  transition: background-color 0.2s;
+  border-radius: 8px;
+  transition: background 0.2s, border-color 0.2s;
   width: 40px;
   height: 40px;
 }
 
 .notificationBtn:hover {
-  background-color: #7A4E73;
+  background: rgba(14, 165, 233, 0.15);
+  border-color: rgba(14, 165, 233, 0.4);
 }
 
 .notificationIcon {
@@ -107,9 +155,9 @@
 
 .notificationBadge {
   position: absolute;
-  top: 0;
-  right: 0;
-  background-color: #ef4444;
+  top: -4px;
+  right: -4px;
+  background-color: #EF4444;
   color: white;
   border-radius: 50%;
   width: 18px;
@@ -117,43 +165,47 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.7rem;
-  font-weight: bold;
-  border: 2px solid white;
+  font-size: 0.68rem;
+  font-weight: 700;
+  border: 2px solid #0F1B35;
 }
 
+/* ── Notification Panel ───────────────────────────────────── */
 .notificationPanel {
   position: absolute;
-  top: calc(100% + 10px);
+  top: calc(100% + 12px);
   right: 0;
-  width: 350px;
-  max-height: 500px;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+  width: 360px;
+  max-height: 520px;
+  background: #FFFFFF;
+  border-radius: 14px;
+  box-shadow: 0 20px 60px rgba(15, 27, 53, 0.25), 0 4px 16px rgba(15, 27, 53, 0.1);
+  border: 1px solid rgba(226, 232, 240, 0.8);
   z-index: 1000;
   display: flex;
   flex-direction: column;
-  animation: slideDown 0.3s ease-out;
+  overflow: hidden;
+  animation: slideDown 0.25s ease-out;
 }
 
 @keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(-10px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .notificationHeader {
-  padding: 1rem;
-  border-bottom: 1px solid #e5e7eb;
+  padding: 1rem 1.25rem;
+  background: linear-gradient(135deg, #0F1B35, #1A2D52);
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.notificationHeader h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: #FFFFFF;
+  font-weight: 700;
 }
 
 .notificationHeaderActions {
@@ -163,79 +215,74 @@
 }
 
 .markAllReadBtn {
-  background: none;
-  border: none;
+  background: rgba(14,165,233,0.15);
+  border: 1px solid rgba(14,165,233,0.4);
   cursor: pointer;
-  font-size: 0.75rem;
-  color: #3b82f6;
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  transition: background-color 0.2s;
-  font-weight: 500;
+  font-size: 0.72rem;
+  color: #0EA5E9;
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: background 0.2s;
 }
 
 .markAllReadBtn:hover {
-  background-color: #eff6ff;
+  background: rgba(14,165,233,0.3);
 }
 
 .connectionStatus {
-  font-size: 0.75rem;
-  color: #ef4444;
+  font-size: 0.72rem;
+  color: #FCA5A5;
   font-weight: normal;
 }
 
 .connectionMessage {
   font-size: 0.75rem;
-  color: #9ca3af;
+  color: #94A3B8;
   margin-top: 0.5rem;
 }
 
-.notificationHeader h3 {
-  margin: 0;
-  font-size: 1.1rem;
-  color: #ffffff;
-  font-weight: 600;
-}
-
 .closeNotificationBtn {
-  background: none;
+  background: rgba(255,255,255,0.1);
   border: none;
   cursor: pointer;
-  font-size: 1.2rem;
-  color: #6b7280;
-  padding: 0.25rem;
+  font-size: 1rem;
+  color: #CBD5E1;
+  width: 28px;
+  height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 4px;
-  transition: background-color 0.2s;
+  border-radius: 6px;
+  transition: background 0.2s;
 }
 
 .closeNotificationBtn:hover {
-  background-color: #7A4E73;
+  background: rgba(255,255,255,0.2);
+  color: #ffffff;
 }
 
 .viewAllContainer {
-  padding: 0.75rem 1rem;
-  border-bottom: 1px solid #e5e7eb;
-  background-color: #f9fafb;
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid #F1F5F9;
+  background: #F8FAFF;
 }
 
 .viewAllBtn {
   width: 100%;
   padding: 0.5rem;
-  background-color: #3b82f6;
+  background: linear-gradient(135deg, #0F1B35, #1A2D52);
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 0.875rem;
-  font-weight: 500;
-  transition: background-color 0.2s;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: opacity 0.2s;
 }
 
 .viewAllBtn:hover {
-  background-color: #2563eb;
+  opacity: 0.9;
 }
 
 .notificationList {
@@ -244,206 +291,167 @@
 }
 
 .notificationItem {
-  padding: 1rem;
-  border-bottom: 1px solid #f3f4f6;
+  padding: 0.9rem 1.25rem;
+  border-bottom: 1px solid #F1F5F9;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background 0.15s;
   display: flex;
   align-items: flex-start;
   gap: 0.75rem;
   position: relative;
 }
 
+.notificationItem:hover {
+  background: #F0F4FF;
+}
+
+.notificationItem.unread {
+  background: #FFF9EC;
+  border-left: 3px solid #0EA5E9;
+}
+
 .notificationIconWrapper {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   flex-shrink: 0;
-  margin-top: 0.125rem;
+  margin-top: 0.1rem;
 }
 
 .unreadIndicator {
   position: absolute;
-  top: 1rem;
+  top: 0.9rem;
   right: 1rem;
   width: 8px;
   height: 8px;
-  background-color: #3b82f6;
+  background-color: #0EA5E9;
   border-radius: 50%;
-}
-
-.notificationItem:hover {
-  background-color: #7A4E73;
-}
-
-.notificationItem.unread {
-  background-color: #eff6ff;
-  border-left: 3px solid #3b82f6;
 }
 
 .notificationContent {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.2rem;
   flex: 1;
   min-width: 0;
 }
 
 .notificationTitle {
   margin: 0;
-  color: #1f2937;
-  font-size: 0.9rem;
-  font-weight: 600;
+  color: #1E293B;
+  font-size: 0.875rem;
+  font-weight: 700;
 }
 
 .notificationMessage {
   margin: 0;
-  color: #6b7280;
-  font-size: 0.85rem;
+  color: #64748B;
+  font-size: 0.82rem;
   line-height: 1.4;
 }
 
 .notificationTime {
-  color: #9ca3af;
-  font-size: 0.75rem;
+  color: #94A3B8;
+  font-size: 0.72rem;
   margin-top: 0.25rem;
+  font-weight: 500;
 }
 
 .noNotifications {
-  padding: 2rem;
+  padding: 2.5rem;
   text-align: center;
-  color: #6b7280;
+  color: #94A3B8;
 }
 
-/* Profile Section */
+/* ── Profile ─────────────────────────────────────────────── */
 .profileSection {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.5rem;
-  border-radius: 8px;
-  transition: background-color 0.2s;
+  gap: 0.6rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.06);
+  transition: background 0.2s, border-color 0.2s;
+  cursor: default;
 }
 
 .profileSection:hover {
-  background-color: #7A4E73;
+  background: rgba(14, 165, 233, 0.12);
+  border-color: rgba(14, 165, 233, 0.35);
 }
 
 .profilePicture {
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #e5e7eb;
+  border: 2px solid #0EA5E9;
 }
 
 .profileInitials {
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #6b46c1, #8b5cf6);
-  color: white;
+  background: linear-gradient(135deg, #0EA5E9, #0284C7);
+  color: #0F1B35;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 600;
-  font-size: 1rem;
-  border: 2px solid #e5e7eb;
+  font-weight: 800;
+  font-size: 0.9rem;
+  border: 2px solid rgba(14, 165, 233, 0.3);
+  flex-shrink: 0;
 }
 
 .profileName {
-  font-size: 0.9rem;
-  color: #ffffff;
-  font-weight: 500;
-  display: none; /* Hide on mobile, show on larger screens */
-}
-/* 
-.logoutBtn {
-  background-color: #ef4444;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: background-color 0.3s;
-  font-weight: 500;
+  font-size: 0.85rem;
+  color: #E2E8F0;
+  font-weight: 600;
+  display: none;
 }
 
-.logoutBtn:hover {
-  background-color: #dc2626;
-} */
-
+/* ── Logout ──────────────────────────────────────────────── */
 .logoutBtn {
-  background: none;
-  border: none;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.25);
   cursor: pointer;
-  color: #ffffff; /* your brand color */
+  color: #FCA5A5;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 6px;
-  transition: 0.2s ease;
+  padding: 0;
+  border-radius: 8px;
+  width: 40px;
+  height: 40px;
+  transition: all 0.2s;
 }
 
 .logoutBtn:hover {
-  color: #ffffff; /* lighter shade */
-  transform: scale(1.1);
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.5);
+  transform: scale(1.05);
 }
 
-/* Responsive Design */
+/* ── Divider ─────────────────────────────────────────────── */
+.headerDivider {
+  width: 1px;
+  height: 28px;
+  background: rgba(255,255,255,0.12);
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
 @media (min-width: 768px) {
-  .profileName {
-    display: inline;
-  }
+  .profileName { display: inline; }
 }
 
 @media (max-width: 768px) {
-  .dashboardHeader {
-    padding: 1rem;
-  }
-
-  .dashboardTitle {
-    font-size: 1.2rem;
-  }
-
-  .notificationPanel {
-    width: 300px;
-    right: -10px;
-  }
-
-  .headerRight {
-    gap: 0.5rem;
-  }
-
-  .refreshBtn {
-    min-width: 36px;
-    height: 36px;
-    padding: 0.4rem;
-  }
-
-  .notificationBtn {
-    width: 36px;
-    height: 36px;
-  }
-
-  .profilePicture,
-  .profileInitials {
-    width: 36px;
-    height: 36px;
-  }
+  .dashboardHeader { padding: 0 1rem; }
+  .dashboardTitle { font-size: 1rem; }
+  .headerBrandName { display: none; }
+  .notificationPanel { width: 300px; right: -10px; }
+  .headerRight { gap: 0.4rem; }
 }
 
 @media (max-width: 480px) {
-  .dashboardTitle {
-    font-size: 1rem;
-  }
-
-  .notificationPanel {
-    width: calc(100vw - 2rem);
-    right: -1rem;
-  }
-
-  .logoutBtn {
-    padding: 0.4rem 0.75rem;
-    font-size: 0.8rem;
-  }
+  .dashboardTitle { font-size: 0.9rem; }
+  .notificationPanel { width: calc(100vw - 1.5rem); right: -0.75rem; }
 }

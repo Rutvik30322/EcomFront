@@ -1,89 +1,97 @@
 /* ============================================================
-   Global styles — single place for typography and base reset
-   Add the Inter font link to index.html to activate.
+   BazarX Admin Panel — Global Design System
+   Brand: Deep Navy (#0F1B35) + Gold (#F59E0B)
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
-/* Base Reset */
+/* ── CSS Design Tokens ──────────────────────────────────────── */
+:root {
+  /* Brand Palette */
+  --clr-primary:        #0F1B35;   /* deep navy */
+  --clr-primary-light:  #1A2D52;
+  --clr-primary-mid:    #243C6E;
+  --clr-accent:         #0EA5E9;   /* ShopNova teal */
+  --clr-accent-hover:   #0284C7;
+  --clr-accent-light:   #E0F2FE;
+
+  /* Neutrals */
+  --clr-bg:             #F0F4FF;
+  --clr-surface:        #FFFFFF;
+  --clr-surface-2:      #F7F9FF;
+  --clr-border:         #E2E8F0;
+  --clr-text:           #1E293B;
+  --clr-text-muted:     #64748B;
+  --clr-text-white:     #FFFFFF;
+
+  /* Feedback */
+  --clr-success:        #10B981;
+  --clr-error:          #EF4444;
+  --clr-warning:        #F59E0B;
+  --clr-info:           #3B82F6;
+
+  /* Shadows */
+  --shadow-sm:   0 1px 3px rgba(15, 27, 53, 0.08);
+  --shadow-md:   0 4px 12px rgba(15, 27, 53, 0.12);
+  --shadow-lg:   0 10px 30px rgba(15, 27, 53, 0.18);
+  --shadow-xl:   0 20px 60px rgba(15, 27, 53, 0.25);
+
+  /* Radius */
+  --radius-sm:   6px;
+  --radius-md:   10px;
+  --radius-lg:   16px;
+  --radius-xl:   24px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition: 0.25s ease;
+}
+
+/* ── Base Reset ─────────────────────────────────────────────── */
 *,
 *::before,
 *::after {
-    box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-/* Responsive Root Scaling */
-html {
-    font-size: 16px;
-    /* 100% on standard desktop */
-}
+/* ── Responsive Root Scaling ────────────────────────────────── */
+html { font-size: 16px; }
+@media screen and (max-width: 1400px) { html { font-size: 15.5px; } }
+@media screen and (max-width: 1200px) { html { font-size: 15px; } }
+@media screen and (max-width: 992px)  { html { font-size: 14.5px; } }
+@media screen and (max-width: 768px)  { html { font-size: 14px; } }
+@media screen and (max-width: 576px)  { html { font-size: 13.5px; } }
+@media screen and (max-width: 400px)  { html { font-size: 13px; } }
 
-@media screen and (max-width: 1400px) {
-    html {
-        font-size: 15.5px;
-    }
-}
-
-@media screen and (max-width: 1200px) {
-    html {
-        font-size: 15px;
-    }
-}
-
-@media screen and (max-width: 992px) {
-    html {
-        font-size: 14.5px;
-    }
-}
-
-@media screen and (max-width: 768px) {
-    html {
-        font-size: 14px;
-    }
-}
-
-@media screen and (max-width: 576px) {
-    html {
-        font-size: 13.5px;
-    }
-}
-
-@media screen and (max-width: 400px) {
-    html {
-        font-size: 13px;
-    }
-}
-
-/* Global Typography */
+/* ── Global Typography ──────────────────────────────────────── */
 body {
-    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-    font-size: clamp(13px, 0.9375rem, 15px);
-    /* Scales from 15px down to 13px safely */
-    font-weight: 400;
-    line-height: 1.5;
-    color: #1f2937;
-    background-color: #f9fafb;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  font-size: clamp(13px, 0.9375rem, 15px);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--clr-text);
+  background-color: var(--clr-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Headings */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    font-family: 'Outfit', sans-serif;
-    font-weight: 600;
-    line-height: 1.25;
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--clr-text);
 }
 
-/* Inputs & Buttons inherit font */
-input,
-textarea,
-select,
-button {
-    font-family: inherit;
-    font-size: inherit;
+input, textarea, select, button {
+  font-family: inherit;
+  font-size: inherit;
 }
+
+a {
+  color: var(--clr-accent);
+  text-decoration: none;
+}
+
+/* ──────────────────────────────────────────────────────────── */

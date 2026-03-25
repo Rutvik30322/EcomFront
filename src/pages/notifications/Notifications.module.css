@@ -42,12 +42,12 @@
 }
 
 .markAllReadBtn {
-  background-color: #3b82f6;
+  background-color: #0EA5E9;
   color: white;
 }
 
 .markAllReadBtn:hover {
-  background-color: #2563eb;
+  background-color: #0EA5E9;
 }
 
 .clearAllBtn {
@@ -85,13 +85,13 @@
 }
 
 .filterBtn.active {
-  background-color: #3b82f6;
+  background-color: #0EA5E9;
   color: white;
-  border-color: #3b82f6;
+  border-color: #0EA5E9;
 }
 
 .filterBtn.active:hover {
-  background-color: #2563eb;
+  background-color: #0EA5E9;
 }
 
 /* Table Container */
@@ -177,7 +177,7 @@
 .unreadDot {
   width: 8px;
   height: 8px;
-  background-color: #3b82f6;
+  background-color: #0EA5E9;
   border-radius: 50%;
   flex-shrink: 0;
 }
@@ -462,7 +462,7 @@
 .formGroup select:focus,
 .formGroup textarea:focus {
   outline: none;
-  border-color: #3b82f6;
+  border-color: #0EA5E9;
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
@@ -500,7 +500,7 @@
 .saveBtn {
   padding: 0.625rem 1.25rem;
   border: none;
-  background-color: #3b82f6;
+  background-color: #0EA5E9;
   color: white;
   border-radius: 6px;
   cursor: pointer;
@@ -510,7 +510,7 @@
 }
 
 .saveBtn:hover:not(:disabled) {
-  background-color: #2563eb;
+  background-color: #0EA5E9;
 }
 
 .saveBtn:disabled {
@@ -524,34 +524,47 @@
   justify-content: center;
   align-items: center;
   gap: 1rem;
-  padding: 1.5rem;
-  border-top: 1px solid #e5e7eb;
+  margin-top: 2rem;
+  padding: 1rem;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #f1f5f9;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
 }
 
 .paginationBtn {
-  padding: 0.5rem 1rem;
-  border: 1px solid #d1d5db;
+  padding: 0.625rem 1.25rem;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
   background-color: white;
-  color: #374151;
-  border-radius: 6px;
+  color: #334155;
+  font-size: 0.9rem;
+  font-weight: 600;
   cursor: pointer;
-  font-size: 0.875rem;
-  font-weight: 500;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
 }
 
 .paginationBtn:hover:not(:disabled) {
-  background-color: #f9fafb;
-  border-color: #9ca3af;
+  background-color: #f0f9ff;
+  border-color: #bae6fd;
+  color: #0369a1;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.1);
 }
 
 .paginationBtn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+  background-color: #f8fafc;
+  color: #94a3b8;
+  border-color: #e2e8f0;
+  box-shadow: none;
+  transform: translateY(0);
 }
 
 .paginationInfo {
-  color: #6b7280;
-  font-size: 0.875rem;
+  padding: 0.625rem 1rem;
+  color: #64748b;
+  font-size: 0.9rem;
   font-weight: 500;
 }

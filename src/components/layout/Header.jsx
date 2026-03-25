@@ -17,7 +17,7 @@ const Header = ({ title, onRefresh, refreshLoading, onMenuToggle }) => {
   const notificationRef = useRef(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { user: adminFromStore } = useSelector(state => state.auth);
   const { notifications, unreadCount, markAsRead, markAllAsRead, removeNotification, isConnected } = useSocket();
 
@@ -25,12 +25,17 @@ const Header = ({ title, onRefresh, refreshLoading, onMenuToggle }) => {
     console.warn('onMenuToggle not provided to Header component');
   });
 
+  const currentLang = i18n.language?.split('-')[0] || 'en';
+
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  };
+
   useEffect(() => {
     loadAdminData();
   }, []);
 
   useEffect(() => {
-
     if (adminFromStore) {
       setAdminData(adminFromStore);
     } else {
@@ -40,31 +45,21 @@ const Header = ({ title, onRefresh, refreshLoading, onMenuToggle }) => {
 
   const loadAdminData = async () => {
     try {
-
       const token = localStorage.getItem('adminToken');
       if (!token) {
-
-        if (adminFromStore) {
-          setAdminData(adminFromStore);
-        }
+        if (adminFromStore) setAdminData(adminFromStore);
         return;
       }
-
       const response = await getMe();
       if (response && response.admin) {
         setAdminData(response.admin);
       } else if (response && response.user) {
-
         setAdminData(response.user);
       }
     } catch (err) {
       console.error('Failed to load admin data:', err);
-
       if (err.response?.status === 401) {
-
-        if (adminFromStore) {
-          setAdminData(adminFromStore);
-        }
+        if (adminFromStore) setAdminData(adminFromStore);
       }
     }
   };
@@ -75,22 +70,15 @@ const Header = ({ title, onRefresh, refreshLoading, onMenuToggle }) => {
         setNotificationOpen(false);
       }
     };
-
     if (notificationOpen) {
       document.addEventListener('mousedown', handleClickOutside);
     }
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [notificationOpen]);
 
-  const handleLogout = () => {
-    setShowLogoutModal(true);
-  };
+  const handleLogout = () => setShowLogoutModal(true);
 
   const confirmLogout = () => {
-
     localStorage.clear();
     sessionStorage.clear();
     dispatch(adminLogout());
@@ -98,43 +86,34 @@ const Header = ({ title, onRefresh, refreshLoading, onMenuToggle }) => {
     navigate('/login');
   };
 
-  const cancelLogout = () => {
-    setShowLogoutModal(false);
-  };
+  const cancelLogout = () => setShowLogoutModal(false);
 
-  const toggleNotifications = () => {
-    setNotificationOpen(!notificationOpen);
-  };
+  const toggleNotifications = () => setNotificationOpen(!notificationOpen);
 
   const formatTime = (timestamp) => {
     const date = new Date(timestamp);
     const now = new Date();
     const diffInSeconds = Math.floor((now - date) / 1000);
-
-    if (diffInSeconds < 60) {
-      return 'Just now';
-    } else if (diffInSeconds < 3600) {
-      const minutes = Math.floor(diffInSeconds / 60);
-      return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
-    } else if (diffInSeconds < 86400) {
-      const hours = Math.floor(diffInSeconds / 3600);
-      return `${hours} hour${hours > 1 ? 's' : ''} ago`;
-    } else {
-      const days = Math.floor(diffInSeconds / 86400);
-      return `${days} day${days > 1 ? 's' : ''} ago`;
+    if (diffInSeconds < 60) return 'Just now';
+    if (diffInSeconds < 3600) {
+      const m = Math.floor(diffInSeconds / 60);
+      return `${m} min${m > 1 ? 's' : ''} ago`;
     }
+    if (diffInSeconds < 86400) {
+      const h = Math.floor(diffInSeconds / 3600);
+      return `${h} hr${h > 1 ? 's' : ''} ago`;
+    }
+    const d = Math.floor(diffInSeconds / 86400);
+    return `${d} day${d > 1 ? 's' : ''} ago`;
   };
 
   const handleNotificationClick = (notification) => {
-    if (!notification.read) {
-      markAsRead(notification.id);
-    }
-
+    if (!notification.read) markAsRead(notification.id);
     if (notification.type === 'order' && notification.data?.orderId) {
-      navigate(`/orders`);
+      navigate('/orders');
       setNotificationOpen(false);
     } else if ((notification.type === 'customer' || notification.type === 'user') && notification.data?.userId) {
-      navigate(`/users`);
+      navigate('/users');
       setNotificationOpen(false);
     }
   };
@@ -145,6 +124,7 @@ const Header = ({ title, onRefresh, refreshLoading, onMenuToggle }) => {
   return (
     <>
       <header className={styles.dashboardHeader}>
+        {/* Left: Menu Toggle + Brand + Page Title */}
         <div className={styles.headerLeft}>
           <button
             className={styles.menuToggleBtn}
@@ -153,13 +133,49 @@ const Header = ({ title, onRefresh, refreshLoading, onMenuToggle }) => {
           >
             ☰
           </button>
+
+          {/* ShopNova Brand in Header */}
+          <div className={styles.headerBrand}>
+            <img
+              src="https://img.icons8.com/fluency/48/shopping-cart.png"
+              alt="ShopNova Logo"
+              className={styles.headerBrandLogo}
+              onError={e => { e.target.style.display='none'; }}
+            />
+            <span className={styles.headerBrandName}>
+              Shop<span>Nova</span>
+            </span>
+          </div>
+
+          <div className={styles.headerDivider} />
+
           <h1 className={styles.dashboardTitle}>{t(title || 'Admin Panel')}</h1>
         </div>
 
+        {/* Right: Lang Switcher + Notifications + Profile + Logout */}
         <div className={styles.headerRight}>
-          { }
 
-          { }
+          {/* Language Switcher — EN / हिं */}
+          <div className={styles.langSwitcher}>
+            <button
+              className={`${styles.langBtn} ${currentLang === 'en' ? styles.active : ''}`}
+              onClick={() => changeLanguage('en')}
+              title="English"
+            >
+              EN
+            </button>
+            <button
+              className={`${styles.langBtn} ${currentLang === 'hi' ? styles.active : ''}`}
+              onClick={() => changeLanguage('hi')}
+              title="हिंदी"
+            >
+              हिं
+            </button>
+          </div>
+
+          <div className={styles.headerDivider} />
+
+          {/* Notification Bell */}
           <div className={styles.notificationContainer} ref={notificationRef}>
             <button
               className={styles.notificationBtn}
@@ -168,27 +184,26 @@ const Header = ({ title, onRefresh, refreshLoading, onMenuToggle }) => {
               title="Notifications"
             >
               <span className={styles.notificationIcon}>
-                {isConnected ? <img src={notificationIcon} alt="notifications" width={30} /> : <img src={notificationoffIcon} alt="notificationsoff" width={30} />}
+                {isConnected
+                  ? <img src={notificationIcon} alt="notifications" width={22} />
+                  : <img src={notificationoffIcon} alt="notificationsoff" width={22} />
+                }
               </span>
               {unreadCount > 0 && (
-                <span className={styles.notificationBadge}>
-                  {unreadCount}
-                </span>
+                <span className={styles.notificationBadge}>{unreadCount}</span>
               )}
             </button>
 
-            { }
             {notificationOpen && (
               <div className={styles.notificationPanel}>
                 <div className={styles.notificationHeader}>
-                  <h3>{t('Notifications')} {!isConnected && <span className={styles.connectionStatus}>({t('Disconnected')})</span>}</h3>
+                  <h3>
+                    {t('Notifications')}
+                    {!isConnected && <span className={styles.connectionStatus}> ({t('Disconnected')})</span>}
+                  </h3>
                   <div className={styles.notificationHeaderActions}>
                     {notifications.length > 0 && (
-                      <button
-                        className={styles.markAllReadBtn}
-                        onClick={markAllAsRead}
-                        title={t('Mark all read')}
-                      >
+                      <button className={styles.markAllReadBtn} onClick={markAllAsRead} title={t('Mark all read')}>
                         {t('Mark all read')}
                       </button>
                     )}
@@ -201,27 +216,25 @@ const Header = ({ title, onRefresh, refreshLoading, onMenuToggle }) => {
                     </button>
                   </div>
                 </div>
+
                 {notifications.length > 0 && (
                   <div className={styles.viewAllContainer}>
                     <button
                       className={styles.viewAllBtn}
-                      onClick={() => {
-                        navigate('/notifications');
-                        setNotificationOpen(false);
-                      }}
+                      onClick={() => { navigate('/notifications'); setNotificationOpen(false); }}
                     >
                       {t('View All Notifications')} →
                     </button>
                   </div>
                 )}
+
                 <div className={styles.notificationList}>
                   {notifications.length === 0 ? (
                     <div className={styles.noNotifications}>
+                      <p>🔔</p>
                       <p>{t('No notifications')}</p>
                       {!isConnected && (
-                        <p className={styles.connectionMessage}>
-                          {t('Reconnecting to notification server...')}
-                        </p>
+                        <p className={styles.connectionMessage}>{t('Reconnecting to notification server...')}</p>
                       )}
                     </div>
                   ) : (
@@ -235,18 +248,14 @@ const Header = ({ title, onRefresh, refreshLoading, onMenuToggle }) => {
                           {notification.type === 'order' && '📦'}
                           {notification.type === 'customer' && '👤'}
                           {notification.type === 'user' && '👥'}
-                          {notification.type === 'product' && '📦'}
+                          {notification.type === 'product' && '🏷️'}
                         </div>
                         <div className={styles.notificationContent}>
                           <p className={styles.notificationTitle}>{notification.title}</p>
                           <p className={styles.notificationMessage}>{notification.message}</p>
-                          <span className={styles.notificationTime}>
-                            {formatTime(notification.timestamp)}
-                          </span>
+                          <span className={styles.notificationTime}>{formatTime(notification.timestamp)}</span>
                         </div>
-                        {!notification.read && (
-                          <div className={styles.unreadIndicator}></div>
-                        )}
+                        {!notification.read && <div className={styles.unreadIndicator}></div>}
                       </div>
                     ))
                   )}
@@ -255,7 +264,7 @@ const Header = ({ title, onRefresh, refreshLoading, onMenuToggle }) => {
             )}
           </div>
 
-          { }
+          {/* Profile */}
           <div className={styles.profileSection}>
             {adminPicture ? (
               <img
@@ -277,64 +286,73 @@ const Header = ({ title, onRefresh, refreshLoading, onMenuToggle }) => {
             <span className={styles.profileName}>{adminName}</span>
           </div>
 
-          { }
-          <button className={styles.logoutBtn} onClick={handleLogout}>
-            <img src={logoutIcon} alt="Logout" width="25" />
+          {/* Logout */}
+          <button className={styles.logoutBtn} onClick={handleLogout} title={t('Logout')}>
+            <img src={logoutIcon} alt="Logout" width="20" />
           </button>
-
         </div>
       </header>
 
-      { }
+      {/* Logout Confirmation Modal */}
       {showLogoutModal && (
         <div style={{
           position: 'fixed', inset: 0,
-          background: 'rgba(0,0,0,0.45)',
+          background: 'rgba(15, 27, 53, 0.6)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          zIndex: 9999
+          zIndex: 9999,
+          backdropFilter: 'blur(4px)',
         }}>
           <div style={{
             background: 'white',
-            borderRadius: '14px',
-            padding: '2rem',
+            borderRadius: '18px',
+            padding: '2.5rem',
             width: '100%',
             maxWidth: '380px',
-            boxShadow: '0 20px 60px rgba(0,0,0,0.25)',
+            boxShadow: '0 25px 60px rgba(15,27,53,0.3)',
             textAlign: 'center',
+            border: '1px solid rgba(245,158,11,0.15)',
           }}>
-            <div style={{ fontSize: '2.5rem', marginBottom: '0.75rem' }}>🔒</div>
-            <h3 style={{ margin: '0 0 0.5rem', fontSize: '1.2rem', color: '#1f2937', fontWeight: 700 }}>
+            <div style={{
+              width: '64px', height: '64px',
+              background: 'linear-gradient(135deg, #0F1B35, #1A2D52)',
+              borderRadius: '50%',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              margin: '0 auto 1rem',
+              fontSize: '1.75rem',
+            }}>🔒</div>
+            <h3 style={{ margin: '0 0 0.5rem', fontSize: '1.2rem', color: '#0F1B35', fontWeight: 800 }}>
               {t('Confirm Logout')}
             </h3>
-            <p style={{ margin: '0 0 1.75rem', color: '#6b7280', fontSize: '0.9rem', lineHeight: 1.5 }}>
+            <p style={{ margin: '0 0 2rem', color: '#64748B', fontSize: '0.9rem', lineHeight: 1.6 }}>
               {t('Are you sure you want to logout?')}<br />{t('Your session will be cleared.')}
             </p>
-            <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center' }}>
+            <div style={{ display: 'flex', gap: '0.75rem' }}>
               <button
                 onClick={cancelLogout}
                 style={{
-                  flex: 1, padding: '0.65rem 1rem',
-                  border: '1px solid #d1d5db', borderRadius: '8px',
+                  flex: 1, padding: '0.75rem 1rem',
+                  border: '2px solid #E2E8F0', borderRadius: '10px',
                   background: 'white', color: '#374151',
-                  fontSize: '0.9rem', fontWeight: 600, cursor: 'pointer',
-                  transition: 'background 0.2s'
+                  fontSize: '0.9rem', fontWeight: 700, cursor: 'pointer',
+                  transition: 'all 0.2s',
                 }}
-                onMouseEnter={e => e.target.style.background = '#f3f4f6'}
-                onMouseLeave={e => e.target.style.background = 'white'}
+                onMouseEnter={e => { e.target.style.background = '#F0F4FF'; e.target.style.borderColor = '#0F1B35'; }}
+                onMouseLeave={e => { e.target.style.background = 'white'; e.target.style.borderColor = '#E2E8F0'; }}
               >
                 {t('Cancel')}
               </button>
               <button
                 onClick={confirmLogout}
                 style={{
-                  flex: 1, padding: '0.65rem 1rem',
-                  border: 'none', borderRadius: '8px',
-                  background: '#381230', color: 'white',
-                  fontSize: '0.9rem', fontWeight: 600, cursor: 'pointer',
-                  transition: 'background 0.2s'
+                  flex: 1, padding: '0.75rem 1rem',
+                  border: 'none', borderRadius: '10px',
+                  background: 'linear-gradient(135deg, #0F1B35, #1A2D52)',
+                  color: 'white',
+                  fontSize: '0.9rem', fontWeight: 700, cursor: 'pointer',
+                  transition: 'opacity 0.2s',
                 }}
-                onMouseEnter={e => e.target.style.background = '#7C4168'}
-                onMouseLeave={e => e.target.style.background = '#381230'}
+                onMouseEnter={e => e.target.style.opacity = '0.88'}
+                onMouseLeave={e => e.target.style.opacity = '1'}
               >
                 {t('Logout')}
               </button>
